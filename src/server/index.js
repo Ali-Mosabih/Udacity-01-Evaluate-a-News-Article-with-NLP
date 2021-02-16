@@ -34,7 +34,7 @@ app.get('/', function (req, res) {
 app.post('/check-url', async function (req, res) {
     // console.log(req.body);
     const {articleUrl} = req.body
-    console.log(articleUrl);
+    // console.log(articleUrl);
     // building the MeaningCloud URL
     analyzeUrl = `${API_DATA.API_URL}?key=${API_DATA.API_KEY}&url=${articleUrl}&lang=en`
     const result = await fetch(analyzeUrl);
@@ -65,5 +65,5 @@ app.get('/test', function (req, res) {
 const port = 8000;
 app.listen(port, function () {
     console.log(`Server run on port ${port}`)
-    console.log(`API_key = ${API_DATA.API_KEY}`);
+    // console.log(`API_key = ${API_DATA.API_KEY}`);
 })
