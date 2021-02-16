@@ -5,19 +5,21 @@ const myAPI = 'http://localhost:8000'
 function handleSubmit(event) {
     // event.preventDefault()
 
-    // check what text was put into the form field
+    // get url
     let articleUrl = document.getElementById('url').value
 
+    // check if the url is valid or not
     if (isValidURL(articleUrl)) {
-        console.log(articleUrl);
+        // console.log(articleUrl);
         postData(`${myAPI}/check-url`, { articleUrl })
             .then(res => {
+                // get data from meaningcloude API, then update the UI
                 updateUI(res)
             })
         // console.log("::: Form Submitted :::")
-
     }
     else {
+        // execute if the url not valid
         // console.log("Url is not valid")
         alert("Url is not valid")
         document.getElementById('url').value = '';
@@ -25,6 +27,7 @@ function handleSubmit(event) {
         return
     }
 
+    // sent the url to the local API, then get the result from MeaningCloude API
     async function postData(url, data) {
         const res = await fetch(url, {
             method: 'POST',
@@ -46,6 +49,7 @@ function handleSubmit(event) {
         }
     }
 
+    // Update the UI with the result
     function updateUI(urlAnalysisData) {
         document.getElementById('polarity').innerHTML = `Polarity: ${urlAnalysisData.score_tag}`;
         document.getElementById("agreement").innerHTML = `Agreement: ${urlAnalysisData.agreement}`;

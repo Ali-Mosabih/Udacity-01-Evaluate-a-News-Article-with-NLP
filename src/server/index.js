@@ -15,8 +15,9 @@ app.use(bodyParser.json());
 
 app.use(cors());
 
-// app.use(express.static('dist'))
+app.use(express.static('dist'))
 
+// MeaningCloud Auth
 const API_DATA = {
     API_URL: "https://api.meaningcloud.com/sentiment-2.1",
     API_KEY: process.env.MEANING_CLOUD_KEY
@@ -29,10 +30,12 @@ app.get('/', function (req, res) {
     // res.sendFile('dist/index.html')
 })
 
+// check url sentiment
 app.post('/check-url', async function (req, res) {
     // console.log(req.body);
     const {articleUrl} = req.body
     console.log(articleUrl);
+    // building the MeaningCloud URL
     analyzeUrl = `${API_DATA.API_URL}?key=${API_DATA.API_KEY}&url=${articleUrl}&lang=en`
     const result = await fetch(analyzeUrl);
     const articleAnalsys = await result.json()
@@ -46,6 +49,7 @@ app.post('/check-url', async function (req, res) {
             irony : articleAnalsys.irony
           }
         // console.log(projectData);
+        // send the result to the client
         res.send(projectData)
     }
     catch(error) {
@@ -53,7 +57,6 @@ app.post('/check-url', async function (req, res) {
     }
 })
 // designates what port the app will listen to for incoming requests
-
 
 app.get('/test', function (req, res) {
     res.send(mockAPIResponse)
